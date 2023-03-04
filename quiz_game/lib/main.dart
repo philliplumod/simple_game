@@ -17,25 +17,19 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeigth = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'Mini Logo Quiz Game',
-            style: TextStyle(fontWeight: FontWeight.w300),
+        appBar: AppBar(
+          title: const Center(
+            child: Text(
+              'Mini Logo Quiz Game',
+              style: TextStyle(fontWeight: FontWeight.w300),
+            ),
           ),
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: SizedBox(
-        width: screenWidth,
-        height: screenHeigth,
-        child: const QuestionWidget(),
-      ),
-    );
+        body: const QuestionWidget());
   }
 }

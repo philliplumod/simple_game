@@ -26,7 +26,11 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeigth = MediaQuery.of(context).size.height;
     return SizedBox(
+      width: screenWidth,
+      height: screenHeigth,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
