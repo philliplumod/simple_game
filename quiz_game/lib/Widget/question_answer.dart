@@ -26,41 +26,35 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeigth = MediaQuery.of(context).size.height;
-    return SizedBox(
-      width: screenWidth,
-      height: screenHeigth,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 32),
-            Text('Question $_questionNumber/${question.length}',
-                style: const TextStyle(fontSize: 15)),
-            Expanded(
-                child: PageView.builder(
-                    itemCount: question.length,
-                    controller: _controller,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      // ignore: no_leading_underscores_for_local_identifiers
-                      final _question = question[index];
-                      return buildQuestion(_question);
-                    })),
-            const SizedBox(
-              height: 20,
-            )
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 32),
+          Text('Question $_questionNumber/${question.length}',
+              style: const TextStyle(fontSize: 15)),
+          Expanded(
+              child: PageView.builder(
+                  itemCount: question.length,
+                  controller: _controller,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    // ignore: no_leading_underscores_for_local_identifiers
+                    final _question = question[index];
+                    return buildQuestion(_question);
+                  })),
+          const SizedBox(
+            height: 20,
+          )
+        ],
       ),
     );
   }
 
-  Column buildQuestion(Question question) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  ListView buildQuestion(Question question) {
+    return ListView(
+      scrollDirection: Axis.vertical,
       children: [
         const SizedBox(height: 32),
         Center(
@@ -70,27 +64,28 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             height: 200,
           ),
         ),
-        // Text(question.image, style: const TextStyle(fontSize: 20)),
-        Expanded(
-            child: AnswerWidget(
-                question: question,
-                onClickedOption: (answer) {
-                  if (question.isLocked) {
-                    return;
-                  } else {
-                    setState(() {
-                      question.isLocked = true;
-                      question.selectedAnswer = answer;
-                    });
-                    _isLocked = question.isLocked;
-                    if (question.selectedAnswer!.isCorrect) {
-                      _score++;
-                    }
-                  }
-                })),
-        _isLocked
-            ? Center(child: buildElavatedButton())
-            : const SizedBox.shrink(),
+        AnswerWidget(
+            question: question,
+            onClickedOption: (answer) {
+              if (question.isLocked) {
+                return;
+              } else {
+                setState(() {
+                  question.isLocked = true;
+                  question.selectedAnswer = answer;
+                });
+                _isLocked = question.isLocked;
+                if (question.selectedAnswer!.isCorrect) {
+                  _score++;
+                }
+              }
+            }),
+        if (_isLocked)
+          Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: Center(child: buildElavatedButton()))
+        else
+          const SizedBox.shrink(),
         const SizedBox(height: 50),
       ],
     );

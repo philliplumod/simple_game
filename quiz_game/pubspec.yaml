@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   vibration: ^1.7.6
   msix: ^3.8.2
+  get: ^4.6.5
 
 msix_config:
   display_name: MiniQuiz Game
